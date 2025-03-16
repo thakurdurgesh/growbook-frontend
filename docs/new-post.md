@@ -1,4 +1,3 @@
-
 # New Post Page
 
 Posts allow parents and other authorized users (members of a child's Inner Circle with a What is going on here).  Time Capsule Posts are similar, but have different fields and don't show immediately.
@@ -8,6 +7,57 @@ Posts allow parents and other authorized users (members of a child's Inner Circl
 - Only people who have proper access can make a Post about a child (someone who is an Inner Circle Member for the child and has a role of 'admin' 'owner') - the APIs will provide these details
 - If the person isn't authorized, we show them a message that let's them request access
 - If the child isn't on an Account with a Premium plan, the only the Parent can Post about the child (unless the Account is upgraded) - so we show a message that they should upgrade
+
+
+## Select Post Bottom Sheet
+
+![App Screenshot](https://growbook-doc-screenprints.s3.us-east-1.amazonaws.com/select-post-type.png)
+
+- When this is a Parent, a Parent can make two types of Posts, [Normal] Posts or Time Capsule Posts
+- If they are on a Premium account, this bottom sheet will show both buttons as enabled
+
+### Select Post (Non-Premium) Bottom Sheet
+
+![App Screenshot](https://growbook-doc-screenprints.s3.us-east-1.amazonaws.com/select-post-type-non-premium.png)
+
+- If the Parent is NOT on a Premium account, this bottom sheet will show the Time Capsule Post as disabled and tell them why (they need to upgrade)
+- "Why can't I create a Time Capsule post?" link closes this bottom sheet and opens the Time Capsule Upgrade Bottom Sheet
+
+
+### Time Capsule Upgrade Bottom Sheet
+
+![App Screenshot](https://growbook-doc-screenprints.s3.us-east-1.amazonaws.com/time-capsule-upgrade-bottom-sheet.png)
+
+
+## No Permission to Post
+Parents can make regular posts for their child regardless of if they are Premium.  
+
+However, non-parents can only post if two conditions are met:
+- The child is on a Premium account (actually, their parent's account is Premium account)
+- The Parent has given access to this person to Post about their child
+
+In both scenarios, we need to tell the non-parent why they can't post, if they click on a child on the New Post page that they have no access to.
+
+## No Permission on Premium Account
+
+![App Screenshot](https://growbook-doc-screenprints.s3.us-east-1.amazonaws.com/no-permission-on-premium-account.png)
+- 'Ask {parent's name} for permission'
+  - Sends a message (notification) to the Parent
+  - Closes the bottom sheet
+  - Shows a success Toast message "We've let {Parent name} know!"
+- 'Cancel' closes the bottom sheet
+
+## Parent not on Premium Account
+
+![App Screenshot](https://growbook-doc-screenprints.s3.us-east-1.amazonaws.com/non-parent-on-non-premium-bottom-sheet.png)
+
+- Checkbox must be checked by user before the button is enabled for "Gift an Upgrade"
+- "Gift an upgrade" 
+  - takes the user to a page like the Growbook Premium/Manage Subscription page when it's activated (so the person can pay for a one year subscription)
+  - Closes the bottom sheet
+- 'Cancel' closes the bottom sheet
+
+
 
 ## New Post Page
 

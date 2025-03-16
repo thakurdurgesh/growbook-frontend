@@ -32,7 +32,9 @@ From this page, the user can:
 
 * Home goes to Home Page
 * Resource goes to Resources Page
-* Post opens up Post Page
+* Post
+  * If this is a Parent, it opens Select Post bottom sheet (show on the New Post page)
+  * If this is NOT a parent, it goes to the New Post page
 * Timeline (which should say Chapters instead) goes to Chapters Page
 * Settings goes to Settings page
 
@@ -165,6 +167,7 @@ Response (200 OK):
   * Notification with View Button
   * If there's no view button, there will only be one place that people can can go with a notification is clicked
   * If there's a view button, they will go to one page if they click the view button, and another if they click on the rest of the notification
+* The API will send the text to post and where to go when someone clicks (one link if there's no view button, two if there's a view button)
 * When a post has never been viewed (read_at: null), put a purple background (otherwise white)
 
 ### Empty State (no Notifications returned)
@@ -272,12 +275,12 @@ Returns the current user's notifications and automatically marks them as read.
 The posts should be built as a reusable component since they can show on different pages
 
 * The name of the child and their avatar are at the top of the post
+* Bookmark - Bookmarks (or remove from user's Bookmarks if they clicked after previously bookmarking the post)
+* Three dot icon opens Post More Actions (bottom sheet)
 * Next, photo/videos if present
   * This is a carousel section that the user can swipe to see more
   * Thumbnails of the photos/videos show to indicate where they are in the carousel
 * Then, data from the posts and associated records
-  * Post date (age of the child) ("Aug 14, 2024 (18 months old)")
-  * Post body ("Liam, just..."
   * Chips that show only IF, there is a:
     * First record associated with the Post
     * Achievement record associated with the Post
@@ -285,18 +288,33 @@ The posts should be built as a reusable component since they can show on differe
     * Favorite tag associated with the Post
     * Likes tag associated with the Post 
     * Dislikes tag associated with the Post
-  * The chips line is a carousel, in case there are multiple  
-  * The value/changes show after the type of chip, for example:
-    * First: Time Walking
-    * Achievement: Read Harry Potter Book
-    * Measurement: 13.2 lbs., 2'6"
-    * Favorites: (+)Pizza; (-)Vegetables, Baths
-    * Likes: (+)iPhone, Minecraft; (-)Android Phone
-    * Dislikes: (+)Sleep; (-)Naps, Milk
+  * Post body ("Liam, just...")
+  * Show the changes made to the values of the associated records above (not shown here)
+  * Post date (age of the child) ("Aug 14, 2024 (18 months old)")  
   * Icons
     * Heart - Likes (or Unlikes if they already liked) Post - changes count and color without reload
     * Talk bubble - Comments bottom sheet opens - count of comments changes without page reload
-    * Bookmark - Bookmarks (or remove from user's Bookmarks if they clicked after previously bookmarking the post) Post for the user - count changes without page reload
+    * [ignore the airplane icon - do not include in UX]
+
+## Post More Actions Bottom Sheet
+![App Screenshot](https://growbook-doc-screenprints.s3.us-east-1.amazonaws.com/post-more-actions.png)
+
+- Report user will allow them to flag this Post/user
+- Edit post, show if they created the post (they are the post.user)
+  - Closes the bottom sheet
+  - Takes them to a page like the Create one, with the values populated based on the post data
+- Make private, show if this is an Inner Circle Member with an admin role for this child
+  - Closes the bottom sheet
+  - Hides the post for everyone
+- Delete post, show if they created the post (they are the post.user)
+  - Closes the bottom sheet
+  - Opens Delete Post Bottom Sheet (or changes to it)
+
+## Delete Post Bottom Sheet
+![App Screenshot](https://growbook-doc-screenprints.s3.us-east-1.amazonaws.com/delete-post-bottom-sheet.png)
+
+Allows the person to delete a Post, if they posted it.
+
 
 ## Empty States for Home Page
 
