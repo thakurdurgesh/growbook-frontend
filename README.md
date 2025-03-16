@@ -1,50 +1,70 @@
-# Welcome to your Expo app 👋
+# Growbook Frontend
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile application for plant enthusiasts built with Expo and React Native.
 
-## Get started
+## Setup Instructions
 
-1. Install dependencies
+1. **Install dependencies**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. **Configure Google Authentication**
+
+   This app uses Google Sign-In for authentication. Follow these steps to set it up:
+
+   a. **Create API Credentials File**:
+   - Copy `constants/Secrets.template.ts` to `constants/Secrets.ts`
+   - Add your API credentials from your Rails backend:
+     ```typescript
+     export const API_CLIENT_ID = 'c9d9a11d452baeed0839acb2c937e9e4';
+     export const API_CLIENT_SECRET = '89a35c3f197d6720f0876a35472932a8c909f6cfa48e4ecfdf62ca2858838ebe';
+     ```
+
+   b. **Firebase Configuration**:
+   - The `google-services.json` file should already be in place
+   - This file is gitignored for security reasons
+
+3. **Start the app**
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+   For native builds with Google Sign-In:
+   ```bash
+   npx expo run:ios
+   # or
+   npx expo run:android
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Project Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- `app/` - Main application code (using Expo Router)
+- `constants/` - Configuration constants
+- `hooks/` - Custom React hooks including authentication
+- `components/` - Reusable UI components
 
-## Get a fresh project
+## Security Notes
 
-When you're ready, run:
+- Never commit sensitive credentials to Git
+- `constants/Secrets.ts` and `google-services.json` are in `.gitignore`
+- Each developer needs their own copy of these files
 
-```bash
-npm run reset-project
-```
+## Google Authentication Flow
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+1. User taps "Sign in with Google" in the app
+2. Native Google Sign-In SDK handles authentication
+3. App receives Google ID token
+4. App sends token to Rails backend
+5. Rails backend verifies token with Google
+6. Rails backend creates/updates user record
+7. Rails backend returns user data and API token
+8. App stores API token for future requests
 
-## Learn more
+## Useful Documentation
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Expo Documentation](https://docs.expo.dev/)
+- [Google Sign-In for Expo](https://docs.expo.dev/guides/authentication/#google)
+- [Expo Router](https://docs.expo.dev/router/introduction/)

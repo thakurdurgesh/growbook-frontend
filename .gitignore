@@ -36,3 +36,14 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# windsurf rules
+.windsurfrules
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
+
+# API Keys and Secrets
+constants/Secrets.ts
+.qodo
