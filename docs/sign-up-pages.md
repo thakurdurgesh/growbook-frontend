@@ -94,14 +94,42 @@ Response (201 Created):
 * If the code is wrong, they whould see an error message and the fields for the code should be cleared
 * They will not be able to use the app until they successfully confirm
 * If they confirm, they will be redirected to the Sign Up Name page
+User email
 
+### Confirm Code API
+Confirms if code entered matches the one in the DB for the email address.  If yes, the user should be allowed to change the password.
 
+```
+POST /api/v1/users/email_verification/verify
+```
 
-### Confirm Email
-Marks the parent user record as confirmed.
+#### Request Parameters
 
-Request Body: TBD
+| Parameter | Type   | Required | Description                           |
+|-----------|--------|----------|---------------------------------------|
+| email     | string | Yes      | The email address to verify           |
+| code      | string | Yes      | The 6-digit verification code         |
 
+#### Response
+
+**Success (200 OK)**
+
+For new users completing registration:
+```json
+{
+  "message": "Email verified successfully",
+  "email_verified": true,
+  "api_token": "your_api_token_here"
+}
+```
+
+For existing users:
+```json
+{
+  "message": "Email verified successfully",
+  "email_verified": true
+}
+```
 
 
 ## Sign Up Name Page
