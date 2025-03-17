@@ -42,8 +42,12 @@ app-example
 
 # Firebase
 google-services.json
+google-services.json.template
 GoogleService-Info.plist
+GoogleService-Info.plist.template
 
 # API Keys and Secrets
 constants/Secrets.ts
 .qodo
+google-services.json.template
+GoogleService-Info.plist.template

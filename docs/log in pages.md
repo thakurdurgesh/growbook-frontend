@@ -66,13 +66,59 @@ TBD
 
 
 ### Forgot Password
-Checks if an email exists.  
+When this link is clicked:
 
-If yes, send the password reset email with code.
-If no, show error message.
+* Verifies that email is entered and vaid
+  * use EmailInput component
+  * If invalid, show error toast message "Please check the email entered"
+  * If valid, makes call to Request Verification Code API
+    * If the call is successful:
+      * Redirect them to the Forgot Password page
+    * Else, an error toast message with "We hit a snag. Please give it another try in a bit. We're on it!" 
 
-Request Body:
-TBD
+
+### Request Verification Code
+
+Sends a verification code to the specified email address.
+
+```
+POST /api/v1/users/email_verification
+```
+
+#### Request Parameters
+
+| Parameter | Type   | Required | Description                                |
+|-----------|--------|----------|--------------------------------------------|
+| email     | string | Yes      | The email address to send the code to      |
+
+#### Response
+
+**Success (200 OK)**
+
+```json
+{
+  "message": "If your email exists in our system, a verification code has been sent."
+}
+```
+
+> Note: For security reasons, the response is the same whether the email exists or not to prevent user enumeration attacks.
+
+**Error (422 Unprocessable Entity)**
+
+```json
+{
+  "error": "Email is required"
+}
+```
+
+**Error (429 Too Many Requests)**
+
+```json
+{
+  "error": "Too many verification code requests. Please try again later.",
+  "code": "rate_limited"
+}
+```
 
 
 ## Forgot Password Page
@@ -82,13 +128,46 @@ TBD
 * User populates code once they get the email
 * "name@gmail.com" will change to whatever email they populated on the previous page
 * Note: the image shows "From Messages", but this is wrong (the code won't come from SMS)
-* After six numbers are entered, the number is submitted for checking. If it's wrong an error message shows "Entered code was incorrect. Please try again." and the number fields are reset (to blank). If the code, is correct, the user is taken to the Change Password Page.
+* After six numbers are entered, the number is submitted for checking. 
+  * If it's wrong: 
+    * Reset the numbers fields to nil
+    * Show the an error toast with the message from the API
+  * If the code, is correct, the user is taken to the Change Password Page.
 
-### Confirm Code
+### Confirm Code API
 Confirms if code entered matches the one in the DB for the email address.  If yes, the user should be allowed to change the password.
 
-Request Body:
-TBD
+```
+POST /api/v1/users/email_verification/verify
+```
+
+#### Request Parameters
+
+| Parameter | Type   | Required | Description                           |
+|-----------|--------|----------|---------------------------------------|
+| email     | string | Yes      | The email address to verify           |
+| code      | string | Yes      | The 6-digit verification code         |
+
+#### Response
+
+**Success (200 OK)**
+
+For new users completing registration:
+```json
+{
+  "message": "Email verified successfully",
+  "email_verified": true,
+  "api_token": "your_api_token_here"
+}
+```
+
+For existing users:
+```json
+{
+  "message": "Email verified successfully",
+  "email_verified": true
+}
+```
 
 
 ## Change Password Page

@@ -35,8 +35,7 @@ Sign up landing and Sign up email pages.
 ### Sign up with Google
 Associates Google account with new user.
 
-Request Body:
-TBD
+I have some sample code (already referencing the right credentials) to start this from React Native.
 
 
 
@@ -47,47 +46,13 @@ TBD
 * Hint text shows in the email and password fields (Email and Password) until the user types text in their (see screenprint from Log in Page for example)
 * The 'x' icon only shows in the email field after someone types text in their (when clicked, it deletes the entered text)
 * The button should be disabled (gray and not clickable) until, all of these conditions are met: 
-  * they enter an email that looks like a valid format (see below)
+  * they enter an email that looks like a valid format (I created an EmailInput.tsx component for this)
   * the user enters a valid password meeting the minimum criteria; and
   * the password confirmation field matches the first password field.
 * By default, the password fields are masked (they click the eye icon to toggle it and show the password)
 * The password must meet the criteria under the first field
 * The criteria are changed to green as they are met (and changed back to gray, if the password changes and the criteria isn't met anymore)
 * The user is redirected to the Sign Up Confirmation Page after this
-
-Example for email validation:
-```javascript
-import React, { useState } from 'react';
-import { TextInput, Text, View } from 'react-native';
-
-const EmailInput = () => {
-  const [email, setEmail] = useState('');
-  const [isValid, setIsValid] = useState(true);
-
-  const validateEmail = (email) => {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[{1,3}\.{1,3}\.{1,3}\.{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  };
-
-  const handleEmailChange = (text) => {
-    setEmail(text);
-    setIsValid(validateEmail(text));
-  };
-
-  return (
-    <View>
-      <TextInput
-        value={email}
-        onChangeText={handleEmailChange}
-        placeholder="Enter your email"
-      />
-      {!isValid && <Text style={{ color: 'red' }}>Invalid email format</Text>}
-    </View>
-  );
-};
-
-export default EmailInput;
-```
 
 ### Register Parent API 🔓
 Registers a new parent user.

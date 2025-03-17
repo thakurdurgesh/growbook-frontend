@@ -173,7 +173,8 @@ User has Viewer Role:
 * When the toggle is turned on:
   * If they aren't Premium, they'll get an error if they try to enable this for more than one user - this error should be displayed via toast message
   * Updates the Inner Circle Member role to "Poster" role
-  * "Can only view and comment" changes to "Can create posts" 
+  * "Can only view and comment" changes to "Can create posts"
+  * Shows successful toast message "Inner Circle magic! Permissions successfully changed." 
 * X icon collapses the section, like on page load
 
 ### Update Member 👑
@@ -268,6 +269,8 @@ Response (200 OK):
   * If they remove the text from the search box (empty), we unfilter the list again
 * When they select a contact, the appearance changes (see below)
 * When they click the "Send invitations" button after selecting at least one contact, we invite the person/people
+  * Close the bottom sheet
+  * Show a toast message "`{child's first_name}`'s Inner Circle is expanding! Your invitations have been sent."
 * "Cancel" closes the bottom sheet
 
 **When a Contact is Selected**
@@ -338,12 +341,12 @@ Notes:
 * "Invite more people" adds text boxes for "Enter email address"
 * "Send invitations" should be disabled until: 
   * At least one valid format email address is entered (we should be able to use something similar to what was done for the email address on the Sign Up Page)
-  * All fields email fields that are populated have valid format emails
+  * All fields email fields that are populated have valid format emails (I created an EmailInput.tsx component for this)
 * When they a valid email address, the appearance changes (see below)
 * When they click the "Send invitations" button when valid format emails are entered:
   * We invite the person/people
   * Close the bottom sheet
-  * Show a toast message "`{child's first_name}` Inner Circle is expanding! Your invitations have been sent."
+  * Show a toast message "`{child's first_name}`'s Inner Circle is expanding! Your invitations have been sent."
 * "Cancel" closes the bottom sheet
 
 

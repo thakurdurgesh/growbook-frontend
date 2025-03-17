@@ -64,8 +64,7 @@ In both scenarios, we need to tell the non-parent why they can't post, if they c
 ![App Screenshot](https://growbook-doc-screenprints.s3.us-east-1.amazonaws.com/new-post-page.png)
 
 * On page load, we call the Get Post Creation Data API to determine which children this user can post about, and we get the measurement_type, favorites, likes, and dislikes of the child
-* If the user has access to only one child, select the child on page load
-* If the user has access to more than one child, they need to select a child
+* "Chips" showing children (child's first name and image) - this needs to be a carousel, in case all of the children don't fit
 * As soon as we know which child they want to post for (they select one, or we know because they can only post for one child), we need to:
   * Populate the list in the favorites section
   * Populate the list in the likes section
