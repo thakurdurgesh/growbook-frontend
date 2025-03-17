@@ -331,10 +331,6 @@ The empty state (no posts returned needs to be different based on if this is a p
 ### List All Posts 🔒
 Returns all posts the current user has access to through their inner circle memberships.
 
-```http
-GET /api/v1/posts
-```
-
 Response (200 OK):
 ```json
 {
@@ -383,13 +379,38 @@ Response (200 OK):
     }
   ],
   "meta": {
-    "is_parent": true
+    "is_parent": true,
+    "children": [
+      {
+        "id": 2,
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "is_parent": true,
+        "is_premium": true,
+        "can_post": true
+      },
+      {
+        "id": 3,
+        "first_name": "John",
+        "last_name": "Smith",
+        "is_parent": false,
+        "is_premium": false,
+        "can_post": false
+      }
+    ]
   }
 }
 ```
 
-The response always includes metadata about the user, even when posts are found:
-- `is_parent`: Boolean indicating if the current user is a parent user. This flag is used to determine the user's role and permissions.
+The response always includes metadata about the user and children, even when posts are found:
+- `is_parent`: Boolean indicating if the current user is a parent user
+- `children`: Array of children data with the following properties:
+  - `id`: The child's ID
+  - `first_name`: The child's first name
+  - `last_name`: The child's last name
+  - `is_parent`: Boolean indicating if the current user is the parent of this child
+  - `is_premium`: Boolean indicating if the child's inner circle has a premium account
+  - `can_post`: Boolean indicating if the current user is authorized to post about this child
 
 When no posts are found, the response will have an empty posts array:
 
@@ -397,7 +418,17 @@ When no posts are found, the response will have an empty posts array:
 {
   "posts": [],
   "meta": {
-    "is_parent": true
+    "is_parent": true,
+    "children": [
+      {
+        "id": 2,
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "is_parent": true,
+        "is_premium": true,
+        "can_post": true
+      }
+    ]
   }
 }
 ```
